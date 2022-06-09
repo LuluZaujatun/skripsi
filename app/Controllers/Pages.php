@@ -19,20 +19,17 @@ class Pages extends BaseController
         $this->UserModel = new UserModel();
     }
 
+    //DASHBOARD
     public function index()
     {
         $data['tittle'] = 'Dashboard | Monitoring Kinerja Sales';
-        $data['sales'] = $this->UserModel->selectdatasales();
+        $data['wo'] = $this->UserModel->wo();
+        $data['ps'] = $this->UserModel->ps();
+        $data['leader'] = $this->UserModel->leader();
         return view('pages/dashboard', $data);
     }
 
-    public function profile($id = null)
-    {
-        $data['tittle'] = 'Profile | Monitoring Kinerja Sales';
-        $data['profile'] = $this->UserModel->profile($id);
-        return view('pages/profile', $data);
-    }
-
+    //SALES ORDER
     public function sales_order()
     {
         $data['tittle'] = 'Sales Order | Monitoring Kinerja Sales';
@@ -69,6 +66,7 @@ class Pages extends BaseController
         $abonemen = $this->request->getVar('abonemen');
         $sql = "update customer set date_input='" . $date_input . "', no_order='" . $no_order . "', nama_cust='" . $nama_cust . "',sto='" . $sto . "',mitra='" . $mitra . "',pic='" . $pic . "',status='" . $status . "',paket='" . $paket . "',speed='" . $speed . "',abonemen='" . $abonemen . "' where id_customer='" . $id_customer . "'";
         $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Status Updated Successfully!');
         return $this->response->redirect(site_url('table-so'));
     }
 
@@ -80,6 +78,7 @@ class Pages extends BaseController
         return view('pages/detail', $data);
     }
 
+    //CUSTOMER
     public function customers()
     {
         $data['tittle'] = 'Customers | Monitoring Kinerja Sales';
@@ -146,6 +145,7 @@ class Pages extends BaseController
         $abonemen = $this->request->getVar('abonemen');
         $sql = "update customer set date_input='" . $date_input . "', no_order='" . $no_order . "', nama_cust='" . $nama_cust . "',sto='" . $sto . "',mitra='" . $mitra . "',pic='" . $pic . "',status='" . $status . "',paket='" . $paket . "',speed='" . $speed . "',abonemen='" . $abonemen . "' where id_customer='" . $id_customer . "'";
         $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Data Updated Successfully!');
         return $this->response->redirect(site_url('table-cust'));
     }
 
@@ -158,6 +158,7 @@ class Pages extends BaseController
         return $this->response->redirect(site_url('table-cust'));
     }
 
+    //DATA SALES
     public function data_sales()
     {
         $data['tittle'] = 'Data Sales | Monitoring Kinerja Sales';
@@ -202,7 +203,10 @@ class Pages extends BaseController
     public function singleData($id = null)
     {
         $UserModel = new UserModel();
-        $data['tittle'] = 'Data Sales | Monitoring Kinerja Sales';
+        $data = [
+            'tittle'        => 'Edit Data | Monitoring Kinerja Sales',
+            'validation'    => \Config\Services::validation()
+        ];
         $data['salesobj'] = $UserModel->editdatasales($id);
         return view('pages/edit_view', $data);
     }
@@ -222,6 +226,7 @@ class Pages extends BaseController
         $spv = $this->request->getVar('spv');
         $sql = "update data_sales set userID='" . $userID . "', nama_sales='" . $nama . "', witel='" . $witel . "',no_telp='" . $noTelp . "',mitra='" . $mitra . "',posisi='" . $posisi . "',tgl_aktif='" . $tglAktif . "',spv='" . $spv . "' where id_sales='" . $id_sales . "'";
         $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Data Updated Successfully!');
         return $this->response->redirect(site_url('/pages/data_sales'));
     }
 
@@ -235,21 +240,126 @@ class Pages extends BaseController
         return $this->response->redirect(site_url('/pages/data_sales'));
     }
 
-    public function rating()
-    {
-        $data['tittle'] = 'Rating Result | Monitoring Kinerja Sales';
-        return view('pages/rating', $data);
-    }
-
+    //USER
     public function user()
     {
         $data['tittle'] = 'User | Monitoring Kinerja Sales';
+        $data['user'] = $this->UserModel->user();
         return view('pages/user', $data);
+    }
+
+    public function register()
+    {
+        $data = [
+            'tittle' => 'Register | Monitoring Kinerja Sales',
+            'validation' => \Config\Services::validation()
+        ];
+        return view('pages/register', $data);
+    }
+
+    public function regisSave()
+    {
+        $data = [
+            'tittle' => 'Register | Monitoring Kinerja Sales',
+            'validation' => \Config\Services::validation(),
+        ];
+        if (!$this->validate([
+            'userID' => 'required|is_unique[user.userID]',
+            'password' => 'required',
+            'name' => 'required',
+            'posisi' => 'required',
+            'level' => 'required',
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->to('/register')->withInput();
+        }
+        $this->db = \Config\Database::connect();
+        $data['user'] = $this->UserModel->regis();
+        session()->setFlashdata('pesan', 'Register successfully!');
+        return view('pages/register', $data);
+    }
+
+    public function editUser($id = null)
+    {
+        $UserModel = new UserModel();
+        $data = [
+            'tittle'        => 'Edit Data | Monitoring Kinerja Sales',
+            'validation'    => \Config\Services::validation()
+        ];
+        $data['user'] = $UserModel->editUser($id);
+        return view('pages/editUser', $data);
+    }
+
+    public function updateUser()
+    {
+        $data2['tittle'] = 'Data Sales | Monitoring Kinerja Sales';
+        //validasi input
+        if (!$this->validate([
+            'password' => 'required',
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->back()->withInput();
+        }
+        $this->db = \Config\Database::connect();
+        $id = $this->request->getVar('id');
+        $userID = $this->request->getVar('userID');
+        $name = $this->request->getVar('name');
+        $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+        $posisi = $this->request->getVar('posisi');
+        $level = $this->request->getVar('level');
+        $sql = "update user set userID='" . $userID . "', name='" . $name . "',password='" . $password . "',posisi='" . $posisi . "',level='" . $level . "' where id='" . $id . "'";
+        $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Data Updated Successfully!');
+        return $this->response->redirect(site_url('/pages/user'));
+    }
+
+    public function deleteUser($id = null)
+    {
+        // $data2['tittle'] = 'Data User | Monitoring Kinerja Sales';
+        $this->db = \Config\Database::connect();
+        $sql = "delete from user where id='" . $id . "'";
+        $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Data deleted successfully!');
+        return $this->response->redirect(site_url('/pages/user'));
     }
 
     public function setting()
     {
         $data['tittle'] = 'Setting Points | Monitoring Kinerja Sales';
+        $data['setting'] = $this->UserModel->setting();
         return view('pages/setting', $data);
+    }
+
+    public function editPoint($id = null)
+    {
+        $UserModel = new UserModel();
+        $data = [
+            'tittle'        => 'Edit Data | Monitoring Kinerja Sales',
+            'validation'    => \Config\Services::validation()
+        ];
+        $data['setting'] = $UserModel->editPoint($id);
+        return view('pages/editPoint', $data);
+    }
+
+    public function updatePoint()
+    {
+        $data2['tittle'] = 'Data Sales | Monitoring Kinerja Sales';
+        //validasi input
+        if (!$this->validate([
+            'periode' => 'required',
+        ])) {
+            $validation = \Config\Services::validation();
+            return redirect()->back()->withInput();
+        }
+        $this->db = \Config\Database::connect();
+        $id = $this->request->getVar('id');
+        $indikator = $this->request->getVar('indikator');
+        $deskripsi = $this->request->getVar('deskripsi');
+        $point = $this->request->getVar('point');
+        $periode = $this->request->getVar('periode');
+        $sql = "update setting set indikator='" . $indikator . "', deskripsi='" . $deskripsi . "',point='" . $point . "',periode='" . $periode . "' where id='" . $id . "'";
+        $this->db->query($sql);
+        session()->setFlashdata('pesan', 'Periode Updated Successfully!');
+        return $this->response->redirect(site_url('/pages/setting'));
     }
 }

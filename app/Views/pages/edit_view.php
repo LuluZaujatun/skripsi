@@ -11,6 +11,9 @@
                 <span class="text-xs">ID Sales</span>
                 <input type="hidden" name="id_sales" id="id_sales" value="<?php echo $salesobj[0]['id_sales']; ?>">
                 <input type="text" name="userID" class="form-control" id="userID" value="<?php echo $salesobj[0]['userID']; ?>">
+                <div class="invalid-feedback">
+                    <?= $validation->getError('userID'); ?>
+                </div>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <span class="text-xs">Fullname</span>
@@ -23,7 +26,6 @@
                 <select type="text" name="witel" class="form-control form-control-user" id="witel">
                     <option value="<?php echo $salesobj[0]['witel']; ?>"><?php echo $salesobj[0]['witel']; ?></option>
                     <option value="BKS">BKS</option>
-                    <option value="CBT">CBT</option>
                 </select>
             </div>
             <div class="col-xl-3 col-sm-6">

@@ -61,14 +61,13 @@
                 <span class="text-xs">PIC</span>
                 <select type="text" name="pic" class="form-control <?= ($validation->hasError('pic')) ? 'is-invalid' : ''; ?>" id="pic" value="<?= old('pic'); ?>">
                     <option value="Select PIC">Select PIC</option>
-                    <option value="Annisa">Annisa</option>
+                    <option value="Elfan Ery">Elfan Ery</option>
                     <option value="Dinda Marsha">Dinda Marsha</option>
+                    <option value="Annisa">Annisa</option>
+                    <option value="Indah Ayu">Indah Ayu</option>
                     <option value="Doni Pratama">Doni Pratama</option>
                     <option value="Diana">Diana</option>
-                    <option value="Elfan Ery">Elfan Ery</option>
-                    <option value="Indah Ayu">Indah Ayu</option>
-                    <option value="Putra Bagus">Putra Bagus</option>
-                    <option value="Toni Putra">Toni Putra</option>
+                    <option value="Reza Pratama">Reza Pratama</option>
                 </select>
                 <div class="invalid-feedback">
                     <?= $validation->getError('pic'); ?>

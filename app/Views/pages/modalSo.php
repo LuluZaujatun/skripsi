@@ -34,7 +34,6 @@
                 <span class="text-xs">Progress</span>
                 <select type="text" name="status" class="form-control" id="status" value="<?php echo $custpro[0]['status']; ?>">
                     <option value="<?php echo $custpro[0]['status']; ?>"><?php echo $custpro[0]['status']; ?> </option>
-                    <option value="IN PROGRESS">IN PROGRESS</option>
                     <option value="NO ODP">NO ODP</option>
                     <option value="COMPLETED">COMPLETED</option>
                     <option value="CANCEL">CANCEL</option>

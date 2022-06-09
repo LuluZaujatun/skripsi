@@ -29,7 +29,6 @@
                 <span class="text-xs">Witel</span>
                 <select type="text" name="witel" class="form-control <?= ($validation->hasError('witel')) ? 'is-invalid' : ''; ?>" id="witel" placeholder="Witel" value="<?= old('witel'); ?>">
                     <option value="BKS">BKS</option>
-                    <option value="CBT">CBT</option>
                 </select>
                 <div class="invalid-feedback">
                     <?= $validation->getError('witel'); ?>

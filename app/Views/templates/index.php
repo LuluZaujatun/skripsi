@@ -54,7 +54,7 @@
             <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Website Monitoring <?= date('Y'); ?></span>
+                        <span>Copyright &copy; Website Monitoring <?= date('Y'); ?> by Lulu Zaujatun </span>
                     </div>
                 </div>
             </footer>
@@ -84,8 +84,6 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <?= session()->get('pesan') ?>
-                    <?php var_dump(session('level')) ?>
                     <a class="btn btn-primary" href="/logout">Logout</a>
                 </div>
             </div>

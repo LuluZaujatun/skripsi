@@ -65,14 +65,18 @@ class Auth extends BaseController
                 'log' => TRUE,
                 'userID' => $row->userID,
                 'name' => $row->name,
+                'posisi' => $row->posisi,
                 'level' => $row->level,
             );
             session()->set($data);
 
             if (session()->level == 1) {
                 return redirect()->to(base_url('/pages'));
-            } else {
+            }
+            if (session()->level == 2) {
                 return redirect()->to(base_url('/sales'));
+            } else {
+                return redirect()->to(base_url('/spv'));
             }
         } else {
             return redirect()->back()->with('error', 'Password not found');
@@ -103,38 +107,6 @@ class Auth extends BaseController
         $data['forgot'] = $this->UserModel->forgot();
         session()->setFlashdata('pesan', 'User ID successfully sent!');
         return $this->response->redirect(site_url('forgot'));
-    }
-
-    public function register()
-    {
-        $data = [
-            'tittle' => 'Register | Monitoring Kinerja Sales',
-            'validation' => \Config\Services::validation()
-        ];
-        return view('auth/register', $data);
-    }
-
-    public function regisSave()
-    {
-        $data = [
-            'tittle' => 'Register | Monitoring Kinerja Sales',
-            'validation' => \Config\Services::validation(),
-        ];
-        if (!$this->validate([
-            'userID' => 'required|is_unique[user.userID]',
-            'password' => 'required',
-            'name' => 'required',
-            'mitra' => 'required',
-            'posisi' => 'required',
-            'level' => 'required',
-        ])) {
-            $validation = \Config\Services::validation();
-            return redirect()->to('/register')->withInput();
-        }
-        $this->db = \Config\Database::connect();
-        $data['user'] = $this->UserModel->regis();
-        session()->setFlashdata('pesan', 'Register successfully!');
-        return view('auth/register', $data);
     }
 
     public function logout()

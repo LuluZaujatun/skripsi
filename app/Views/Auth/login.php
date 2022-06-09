@@ -25,7 +25,7 @@
 										</div>
 									</div>
 								<?php endif; ?>
-								<?php var_dump(session('level')); ?>
+
 								<?= session()->get('pesan') ?>
 								<!-- email/username -->
 								<form action="<?= base_url('proses') ?>" method="post">
@@ -56,7 +56,6 @@
 								</form>
 								<hr>
 								<p><a class="small" href="<?= base_url('auth/forgot'); ?>"><?= lang('Auth.forgotYourPassword') ?></a></p>
-								<p><a class="small" href="<?= base_url('auth/register'); ?>"><?= lang('Auth.needAnAccount') ?></a></p>
 							</div>
 						</div>
 

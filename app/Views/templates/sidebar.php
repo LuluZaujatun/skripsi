@@ -104,6 +104,36 @@
         </li>
     <?php endif; ?>
 
+    <?php if (session()->level == 3) : ?>
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('/spv'); ?>">
+                <i class="text-gray-900 fas fa-fw fa-tachometer-alt"></i>
+                <span class="text-gray-900">Dashboard</span>
+            </a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Sales Order -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('/spv/order'); ?>">
+                <i class="text-gray-900 fas fa-list fa-sm fa-fw"></i>
+                <span class="text-gray-900">Sales Order</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Customer -->
+        <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('/spv/sales'); ?>">
+                <i class="text-gray-900 fas fa-fw fa-table"></i>
+                <span class="text-gray-900">Data Sales Mitra</span></a>
+        </li>
+    <?php endif; ?>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

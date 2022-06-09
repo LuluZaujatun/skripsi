@@ -5,7 +5,7 @@
 <div class="container">
     <h1 class="h4 mb-2 text-gray-800">Edit Customer</h1>
 
-    <form action="<?= site_url('/update-cust') ?>" method="post">
+    <form action="<?= site_url('/update-cs') ?>" method="post">
         <div class="form-group row mb-3">
             <div class="col-xl-3 col-sm-6 ">
                 <span class="text-xs">Date Input</span>
@@ -36,22 +36,12 @@
                 <span class="text-xs">Mitra</span>
                 <select type="text" name="mitra" class="form-control form-control-user" id="mitra" value="<?php echo $custobj[0]['mitra']; ?>">
                     <option value="<?php echo $custobj[0]['mitra']; ?>"><?php echo $custobj[0]['mitra']; ?></option>
-                    <option value="MCP">MCP</option>
-                    <option value="MNA">MNA</option>
-                    <option value="SDS">SDS</option>
                 </select>
             </div>
             <div class="col-xl-3 col-sm-6">
                 <span class="text-xs">PIC</span>
                 <select type="text" name="pic" class="form-control form-control-user" id="pic">
                     <option value="<?php echo $custobj[0]['pic']; ?>"><?php echo $custobj[0]['pic']; ?></option>
-                    <option value="Elfan Ery">Elfan Ery</option>
-                    <option value="Dinda Marsha">Dinda Marsha</option>
-                    <option value="Annisa">Annisa</option>
-                    <option value="Indah Ayu">Indah Ayu</option>
-                    <option value="Doni Pratama">Doni Pratama</option>
-                    <option value="Diana">Diana</option>
-                    <option value="Reza Pratama">Reza Pratama</option>
                 </select>
             </div>
         </div>
@@ -81,7 +71,7 @@
                 <input type="number" name="abonemen" class="form-control form-control-user" id="abonemen" value="<?php echo $custobj[0]['abonemen']; ?>">
             </div>
         </div>
-        <a class="d-none d-sm-inline-block btn btn-sm shadow-sm mb-2" href="<?= site_url('pages/customers'); ?>"> Cancel</a>
+        <a class="d-none d-sm-inline-block btn btn-sm shadow-sm mb-2" href="<?= site_url('sales/custSales'); ?>"> Cancel</a>
         <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2">Update</button>
 </div>
 

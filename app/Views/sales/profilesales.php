@@ -4,7 +4,7 @@
 
 <!-- Page Heading -->
 <div class="container">
-    <img class="img-profile rounded-circle" alt="Image" height="100" width="100" src="<?php echo base_url('sb admin') ?>/img/default.svg">
+    <img class="img-profile rounded-circle" alt="Image" height="100" width="100" src="<?php echo base_url('sb admin') ?>/img/profile.svg">
     <a class="h4 mb-2 text-gray-800">Profile <?php echo $profilesls[0]['name']; ?></a>
     <div class="form-group row mb-3">
         <div class="col-xl-3 col-sm-6 ">

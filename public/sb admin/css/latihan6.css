@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+  #iwe89{
+    display:none;
+  }
+  #ib1sh{
+    display:none;
+  }
+  .gpd-divider{
+    height:3px;
+    margin:10px 10px 10px 10px;
+    background-color:rgba(0,0,0,0.05);
+  }
+  

@@ -41,22 +41,21 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="mitra">Mitra</label>
-                                        <input type="text" name="mitra" class="form-control  <?= ($validation->hasError('mitra')) ? 'is-invalid' : ''; ?>" placeholder="Mitra">
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('mitra'); ?>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="posisi">Posisi</label>
-                                        <input type="text" name="posisi" class="form-control  <?= ($validation->hasError('posisi')) ? 'is-invalid' : ''; ?>" placeholder="Posisi">
+                                        <select type="text" name="posisi" class="form-control  <?= ($validation->hasError('posisi')) ? 'is-invalid' : ''; ?>" placeholder="Posisi">
+                                            <option value="Sales Force">Sales Force</option>
+                                            <option value="MNA">MNA</option>
+                                            <option value="MCP">MCP</option>
+                                            <option value="SDS">SDS</option>
+                                            <option value="BGES">BGES</option>
+                                        </select>
                                         <div class="invalid-feedback">
                                             <?= $validation->getError('posisi'); ?>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="password"><?= lang('Auth.password') ?></label>
-                                        <input type="password" name="password" class="form-control  <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" placeholder="<?= lang('Auth.password') ?>">
+                                        <input type="text" name="password" class="form-control  <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" placeholder="<?= lang('Auth.password') ?>">
                                         <div class="invalid-feedback">
                                             <?= $validation->getError('password'); ?>
                                         </div>
@@ -65,6 +64,7 @@
                                         <label for="level">Level</label>
                                         <select type="text" name="level" class="form-control  <?= ($validation->hasError('level')) ? 'is-invalid' : ''; ?>" placeholder="Level">
                                             <option value="2">Sales</option>
+                                            <option value="3">SPV</option>
                                             <option value="1">BGES</option>
                                         </select>
                                         <div class="invalid-feedback">
@@ -75,9 +75,9 @@
 
                                     <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.register') ?></button>
                                 </form>
-                                <hr>
+                                <br>
                                 <div class="text-center">
-                                    <p><a class="small" href="<?= base_url('auth/login'); ?>"><?= lang('Auth.alreadyRegistered') ?> <?= lang('Auth.signIn') ?></a>
+                                    <a class="btn btn-secondary btn-block" href="<?= base_url('pages/user'); ?>"> Back to User</a>
                                 </div>
                             </div>
                         </div>

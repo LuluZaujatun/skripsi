@@ -37,34 +37,64 @@ $routes->get('/Admin', function () {
     return redirect()->to('Admin/Dashboard');
 });
 
+$routes->post('latihan4', 'Latihan::latihan4');
+//$routes->post('submit6', 'Latihan::aksi6');
+$routes->get('latihan6', 'Latihan::tugas6');
+
+//LOGIN
 $routes->get('/', 'Auth::login');
 $routes->get('login', 'Auth::login');
 $routes->post('/proses', 'Auth::proses');
-$routes->get('/register', 'Auth::register');
-$routes->post('/regisSave', 'Auth::regisSave');
 $routes->get('/forgot', 'Auth::forgot');
 $routes->post('/send', 'Auth::send');
 $routes->get('logout', 'Auth::logout');
 
+//REGIS USER
+$routes->get('/register', 'Pages::register');
+$routes->post('/regisSave', 'Pages::regisSave');
+
+//USER
+$routes->get('user', 'Pages::user');
+$routes->get('edit-user/(:num)', 'Pages::editUser/$1');
+$routes->post('updateUser', 'Pages::updateUser');
+$routes->get('delete-user/(:num)', 'Pages::deleteUser/$1');
+
+//GENERATE
+$routes->get('pdfView', 'Pdf::pdfView');
+$routes->get('generate', 'Pdf::generate');
+$routes->get('generateSls', 'Pdf::generateSls');
+$routes->get('generateSpv', 'Pdf::generateSpv');
+
+//SALES ORDER
 $routes->get('table-so', 'Pages::sales_order');
 $routes->get('detail-cust/(:num)', 'Pages::detail/$1');
 $routes->get('edit-so/(:num)', 'Pages::singleSo/$1');
 $routes->post('progress-so', 'Pages::progress');
 
+//CUSTOMER SALES
 $routes->post('submit-custSales', 'Sales::saveCustSales');
 $routes->get('table-custSales', 'Sales::custSales');
+$routes->get('edit-cs/(:num)', 'Sales::singleCs/$1');
+$routes->post('update-cs', 'Sales::updateCs');
 
+//CUSTOMER BGES
 $routes->post('submit-cust', 'Pages::saveCust');
 $routes->get('table-cust', 'Pages::customers');
 $routes->get('edit-cust/(:num)', 'Pages::singleCust/$1');
 $routes->post('update-cust', 'Pages::updateCust');
 $routes->get('delete-cust/(:num)', 'Pages::deleteCust/$1');
 
+//DATA SALES
 $routes->post('submit-form', 'Pages::add_aksi');
 $routes->get('table-sales', 'Pages::data_sales');
 $routes->get('edit-view/(:num)', 'Pages::singleData/$1');
 $routes->post('update', 'Pages::updatedata');
 $routes->get('delete/(:num)', 'Pages::delete/$1');
+
+//SETTING
+$routes->get('setting', 'Pages::setting');
+$routes->get('edit-point/(:num)', 'Pages::editPoint/$1');
+$routes->post('updatePoint', 'Pages::updatePoint');
 
 /*
  * --------------------------------------------------------------------

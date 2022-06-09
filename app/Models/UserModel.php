@@ -12,9 +12,6 @@ class UserModel extends Model
     protected $db;
     protected $request;
     protected $table = 'user';
-    protected $primarykey = 'id';
-
-
 
     public function __construct()
     {
@@ -23,10 +20,189 @@ class UserModel extends Model
         $this->request = \Config\Services::request();
     }
 
+    function get_data($nama_sales, $tbl)
+    {
+        $builder = $this->db->table($tbl);
+        $builder->where('nama_sales', $nama_sales);
+        $log = $builder->get()->getRow();
+        return $log;
+    }
+
+    //CUSTOMER
+    public function point()
+    {
+        //pembuatan query
+        $sql = "SELECT COUNT(status) as ps FROM customers group by pic";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //DASHBOARD ADMIN
+    public function leader()
+    {
+        //pembuatan query
+        $sql = "SELECT COUNT(IF(status between 'IN PROGRESS' AND 'NO ODP',1,NULL)) as wo, 
+        COUNT(IF(status='COMPLETED',1,NULL)) as ps, pic, mitra,
+        SUM(IF(status between 'IN PROGRESS' AND 'NO ODP',1,NULL))*50 as wop,
+        SUM(IF(status='COMPLETED',1,NULL))*100 as psp,
+        (sum(if(status between 'IN PROGRESS' and 'NO ODP',1,0))*50)+ (sum(if(status='COMPLETED',1,0))*100) as poin
+        from customer group by pic order by (sum(if(status between 'IN PROGRESS' and 'NO ODP',1,0))*50)+ (sum(if(status='COMPLETED',1,0))*100.1) desc";
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    public function wo()
+    {
+        //pembuatan query
+        $sql = "SELECT * FROM customer where status between 'IN PROGRESS' AND 'NO ODP'";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    public function ps()
+    {
+        //$pic = session()->get('name');
+        //return $this->db->table('customer')->countAll();
+        //pembuatan query
+        $sql = "SELECT * FROM customer where status='COMPLETED'";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //DASHBOARD SALES
+    public function woSls()
+    {
+        $mitra = $this->request->getVar('mitra');
+        $pic = $this->request->getVar('pic');
+        $status = $this->request->getVar('status');
+        //pembuatan query
+        $sql = "INSERT INTO leader(mitra, pic, status)
+                    VALUES('$mitra', '$pic', '$status')";
+
+        //eksekusi query sql
+        //exit("Warning:$sql");
+        $this->db->query($sql);
+        //dd($data);
+        return;
+    }
+
+    public function woSales()
+    {
+        $pic = session()->get('name');
+        //pembuatan query
+        $sql = "SELECT * FROM customer where pic='$pic' AND status between 'IN PROGRESS' AND 'NO ODP'";
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    public function psSales()
+    {
+        $pic = session()->get('name');
+        //return $this->db->table('customer')->countAll();
+        //pembuatan query
+        //$sql = "SELECT pic where pic='$pic', status FROM customer INNER JOIN customer ON status where status='COMPLETED'";
+        $sql = "SELECT * FROM customer where pic='$pic' AND status='COMPLETED'";
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //DASHBOARD SPV
+    public function woSpv()
+    {
+        $pic = session()->get('posisi');
+        //$sql1 = "SELECT * FROM customer where pic='$pic' ";
+        //pembuatan query
+        //$sql = "SELECT pic FROM customer where status between 'IN PROGRESS' AND 'NO ODP'";
+        $sql = "SELECT * FROM customer where mitra='$pic' AND status between 'IN PROGRESS' AND 'NO ODP'";
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    public function psSpv()
+    {
+        $pic = session()->get('posisi');
+        //return $this->db->table('customer')->countAll();
+        //pembuatan query
+        //$sql = "SELECT pic where pic='$pic', status FROM customer INNER JOIN customer ON status where status='COMPLETED'";
+        $sql = "SELECT * FROM customer where mitra='$pic' AND status='COMPLETED'";
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getNumRows();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //CUSTOMER
     public function selectdatacust()
     {
         //pembuatan query
         $sql = "SELECT * FROM customer";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //CUSTOMER SALES
+    public function selectCust()
+    {
+        //pembuatan query
+        $pic = session()->get('name');
+
+        $sql = "SELECT * FROM customer where pic='$pic' ";
 
         //eksekusi query sql
         $query = $this->db->query($sql);
@@ -91,6 +267,43 @@ class UserModel extends Model
         return $data;
     }
 
+    //CUSTOMER SPV
+    public function custSpv()
+    {
+        //pembuatan query
+        $pic = session()->get('posisi');
+
+        $sql = "SELECT * FROM customer where mitra='$pic' ";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //DATA SALES SPV
+    public function salesSpv()
+    {
+        //pembuatan query
+        $pic = session()->get('posisi');
+
+        $sql = "SELECT * FROM data_sales where mitra='$pic' ";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //DATA SALES PIC
     public function selectdatasales()
     {
         //pembuatan query
@@ -155,6 +368,7 @@ class UserModel extends Model
         return $data;
     }
 
+    //LOGIN
     public function login($id)
     {
         //pembuatan query
@@ -186,18 +400,33 @@ class UserModel extends Model
         return;
     }
 
+    //USER
+    public function user()
+    {
+        //pembuatan query
+        $sql = "SELECT * FROM user";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
     public function regis()
     {
         $id = $this->request->getVar('id');
         $userID = $this->request->getVar('userID');
         $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
         $name =  $this->request->getVar('name');
-        $mitra =  $this->request->getVar('mitra');
         $posisi =  $this->request->getVar('posisi');
         $level = $this->request->getVar('level');
         //pembuatan query
-        $sql = "INSERT INTO user(id, userID, password, name, mitra, posisi, level )
-                    VALUES('$id', '$userID', '$password', '$name', '$mitra', '$posisi', '$level')";
+        $sql = "INSERT INTO user(id, userID, password, name, posisi, level )
+                    VALUES('$id', '$userID', '$password', '$name', '$posisi', '$level')";
 
         //eksekusi query sql
         //exit("Warning:$sql");
@@ -206,10 +435,41 @@ class UserModel extends Model
         return;
     }
 
-    public function profile($userID)
+    public function editUser($id)
     {
         //pembuatan query
-        $sql = "SELECT * FROM user";
+        $sql = "SELECT * FROM user where id='" . $id . "'";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    //SETTING
+    public function setting()
+    {
+        //pembuatan query
+        $sql = "SELECT * FROM setting";
+
+        //eksekusi query sql
+        $query = $this->db->query($sql);
+
+        // uraikan hasil query dalam bentuk array
+        $data = $query->getResultArray();
+
+        //kembalikan hasil query ke controller
+        return $data;
+    }
+
+    public function editPoint($id)
+    {
+        //pembuatan query
+        $sql = "SELECT * FROM setting where id='" . $id . "'";
 
         //eksekusi query sql
         $query = $this->db->query($sql);

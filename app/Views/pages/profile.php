@@ -4,12 +4,12 @@
 
 <!-- Page Heading -->
 <div class="container">
-    <img class="img-profile rounded-circle" alt="Image" height="100" width="100" src="<?php echo base_url('sb admin') ?>/img/default.svg">
-    <a class="h4 mb-2 text-gray-800">Profile <?php echo $profile[0]['name']; ?></a>
+    <img class="img-profile rounded-circle" alt="Image" height="100" width="100" src="<?php echo base_url('sb admin') ?>/img/profile.svg">
+    <a class="h4 mb-2 text-gray-800">Profile <?= session()->get('name'); ?></a>
     <div class="form-group row mb-3">
         <div class="col-xl-3 col-sm-6 ">
             <span class="text-xs">ID Sales</span>
-            <input type="hidden" name="id_sales" id="id_sales" value="<?php echo $profile[0]['id']; ?>">
+            <input type="hidden" name="id_sales" id="id_sales" value="<?= session()->get('id'); ?>">
             <input type="text" name="userID" class="form-control" disabled value="<?php echo $profile[0]['userID']; ?>">
         </div>
         <div class="col-xl-3 col-sm-6">

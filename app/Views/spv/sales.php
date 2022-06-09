@@ -4,7 +4,6 @@
 <!-- Page Heading -->
 <div class="container-fluid">
     <h1 class="h4 mb-2 text-gray-800">Sales Force</h1>
-    <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mb-2" href="<?= base_url('/pages/add'); ?>"> <i class="fas fa-plus"></i> Add New Sales </a>
     <?php if (session()->getFlashdata('pesan')) : ?>
         <div class="alert alert-danger" role="alert">
             <?= session()->getFlashdata('pesan');  ?>
@@ -28,14 +27,12 @@
                                         <th scope="col">Mitra</th>
                                         <th scope="col">Posisi</th>
                                         <th scope="col">Aktif</th>
-                                        <th scope="col">SPV</th>
-                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $no = 1;
-                                    foreach ($sales as $row => $s) {
+                                    foreach ($salesSpv as $row => $s) {
                                     ?>
                                         <tr>
                                             <td><?php echo $no++ ?></td>
@@ -46,14 +43,6 @@
                                             <td><?php echo $s['mitra'] ?></td>
                                             <td><?php echo $s['posisi'] ?></td>
                                             <td><?php echo $s['tgl_aktif'] ?></td>
-                                            <td><?php echo $s['spv'] ?></td>
-                                            <td><a href="<?= base_url('edit-view/' . $s['id_sales']); ?>" class="btn btn-danger btn-sm btn-circle">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a href="<?= base_url('delete/' . $s['id_sales']); ?>" class="btn btn-danger btn-sm btn-circle" onclick="return confirm('Are you sure?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

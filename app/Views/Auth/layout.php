@@ -35,7 +35,7 @@
     <footer class="sticky-footer-white">
 
         <div class="copyright text-white text-center">
-            <span>Copyright &copy; Website Lulu Zaujatun Sholekhah <?= date('Y'); ?></span>
+            <span>Copyright &copy; Website by Lulu Zaujatun <?= date('Y'); ?></span>
         </div>
 
     </footer>

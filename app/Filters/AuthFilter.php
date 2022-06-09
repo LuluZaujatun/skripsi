@@ -12,18 +12,24 @@ class AuthFilter implements FilterInterface
     {
         //$auth = session('proses');
         //if (!$auth->isLoggedIn()) {
-        //if (!session('level')) {
-        $session = session();
-        if ($session->get('log') != TRUE) {
+        if (session()->level == '') {
+            //$session = session();
+            //if ($session->get('log') != TRUE) {
             return redirect()->to('/');
         }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        $session = session('logout');
+        //if (session()->level == '1') {
+        //$session = session('logout');
         //if ($session->get('log') == TRUE) {
         //    return redirect()->to('/pages');
         //}
+        if (session()->level == 1) {
+            return redirect()->to(base_url('/pages'));
+        } else {
+            return redirect()->to(base_url('/sales'));
+        }
     }
 }
